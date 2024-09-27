@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <title>Generate QR Code</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+  <style>
+    /* General styling */
+    .container {
+      text-align: center;
+      margin-top: 50px;
+    }
+    img {
+      margin: 20px 0;
+      max-width: 300px;
+      width: 100%;
+      height: auto;
+    }
+
+    /* Print-specific styles */
+    @media print {
+      body * {
+        visibility: hidden; /* Hide everything initially */
+      }
+      .print-container, .print-container * {
+        visibility: visible; /* Show only the QR code section */
+      }
+      .print-container {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        text-align: center;
+      }
+      /* Ensure QR code image is large enough in print */
+      .print-container img {
+        width: 400px;
+        height: 400px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <form action="/generate" method="POST">
+      <div class="mb-3">
+        <label for="usertext" class="form-label">Enter your Text</label>
+        <input type="text" class="form-control usertext" id="usertext" name="usertext" required>
+      </div>
+      <div>
+        <button type="submit" class="btn btn-primary button">Submit</button>
+      </div>
+    </form>
+
+    <% if (qrImage) { %>
+      <div class="print-container">
+        <h2>QR Code for: <%= username %></h2>
+        <img src="data:image/png;base64,<%= qrImage %>" alt="QR Code" id="qrCodeImage">
+      </div>
+    <% } %>
+  </div>
+
+  <!-- Optional: Add a button to trigger print -->
+  <div class="text-center mt-4">
+    <% if (qrImage) { %>
+      <button onclick="window.print();" class="btn btn-secondary">Print QR Code</button>
+    <% } %>
+  </div>
+
+  <script>
+    // Ensure QR code image is fully loaded before print
+    window.onload = function() {
+      const qrImage = document.getElementById("qrCodeImage");
+      qrImage.onload = function() {
+        console.log("QR code image loaded");
+      };
+    };
+  </script>
+</body>
+</html>

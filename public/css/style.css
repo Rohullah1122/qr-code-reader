@@ -1,0 +1,33 @@
+    /* General styling */
+    .container {
+        text-align: center;
+        margin-top: 50px;
+      }
+      img {
+        margin: 20px 0;
+        max-width: 300px;
+        width: 100%;
+        height: auto;
+      }
+  
+      /* Print-specific styles */
+      @media print {
+        body * {
+          visibility: hidden; /* Hide everything initially */
+        }
+        .print-container, .print-container * {
+          visibility: visible; /* Show only the QR code section */
+        }
+        .print-container {
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 100%;
+          text-align: center;
+        }
+        /* Ensure QR code image is large enough in print */
+        .print-container img {
+          width: 400px;
+          height: 400px;
+        }
+      }

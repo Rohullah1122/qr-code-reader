@@ -1,0 +1,1 @@
+this is an app that i express node and html css and bootsrap for creating QR code using the text 
