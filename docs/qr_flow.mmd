@@ -1,0 +1,11 @@
+sequenceDiagram
+    actor U as User
+    participant B as Browser (EJS page)
+    participant S as Express server
+    participant Q as qr-image
+    U->>B: Types text or a link
+    B->>S: POST /generate (usertext)
+    S->>Q: imageSync(usertext, png)
+    Q-->>S: PNG buffer
+    S-->>B: Render main.ejs with base64 QR image
+    U->>B: Print QR Code (print view shows only the code)
